@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✧복숭아의 비밀정원✧</title>
+    <audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+
+    <style>
+        @font-face {
+            font-family: 'GalmuriMono';
+            src: url('GalmuriMono9.ttf') format('truetype');
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'GalmuriMono', sans-serif;
+            background-color: #79c08b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        #logo, #start-screen, .scene {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background-color: #79c08b;
+            position: absolute;
+        }
+        #logo {
+            display: flex;
+            background: url('logo.png') no-repeat center center;
+            background-size: contain;
+        }
+        #start-screen {
+            flex-direction: column;
+            align-items: center;
+        }
+        #start-screen .small-logo {
+            width: 400px;
+            height: 400px;
+            background: url('logo.png') no-repeat center center;
+            background-size: contain;
+            margin-bottom: 5px;
+        }
+        #start-button {
+            width: 150px;
+            height: 50px;
+            background: url('start-button.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+        }
+        #play-video-button {
+            width: 150px;
+            height: 50px;
+            background: url('video-button.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+        }
+        #home-button {
+            width: 200px;
+            height: 100px;
+            background: url('home-button.png') no-repeat center center;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            top: 50%;
+            transform: translateY(-100%);
+        }
+        .scene {
+            flex-direction: column;
+            align-items: center;
+            background-repeat: no-repeat;
+            background-position: center 10%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        #scene1 {
+            background-image: url('scene1-bg.png');
+            background-size: contain;
+        }
+        #scene2 {
+            background-image: url('scene2.png'); 
+            background-size: contain;
+        }
+        #scene3 {
+            background-image: url('scene3.png');
+            background-size: contain;
+        }
+        #scene4 {
+            background-image: url('scene4.png');
+            background-size: contain;
+        }
+
+        #scene5 {
+            background-image: url('scene5.png');
+            background-size: contain;
+        }
+
+        #scene6 {
+            background-image: url('scene6.png');
+            background-size: contain;
+        }
+
+        #scene7 {
+            background-image: url('scene7.png');
+            background-size: contain;
+        }
+
+        #scene8 {
+            background-image: url('scene8.png');
+            background-size: contain;
+        }
+
+        #scene9 {
+            background-image: url('scene9.png');
+            background-size: contain;
+        }
+
+        #scene10 {
+            background-image: url('scene10.png');
+            background-size: contain;
+        }
+
+        #scene11 {
+            background-image: url('scene11.png');
+            background-size: contain;
+        }
+
+        #scene12 {
+            background-image: url('scene12.png');
+            background-size: contain;
+        }
+
+        #scene13 {
+            background-image: url('scene13.png');
+            background-size: contain;
+        }
+
+        #scene14 {
+            background-image: url('scene14.png');
+            background-size: contain;
+        }
+
+        #scene15 {
+            background-image: url('scene15.png');
+            background-size: contain;
+        }
+
+        #scene16 {
+            background-image: url('scene16.png');
+            background-size: contain;
+        }
+
+        #scene17 {
+            background-image: url('scene17.png');
+            background-size: contain;
+        }
+
+        #scene18 {
+            background-image: url('scene18.png');
+            background-size: contain;
+        }
+
+        #scene19 {
+            background-image: url('scene19.png');
+            background-size: contain;
+        }
+
+        #scene20 {
+            background-image: url('scene20.png');
+            background-size: contain;
+        }
+
+        #scene21 {
+            background-image: url('scene21.png');
+            background-size: contain;
+        }
+
+        #scene22 {
+            background-image: url('scene22.png');
+            background-size: contain;
+        }
+
+        #scene23 {
+            background-image: url('scene23.png');
+            background-size: contain;
+        }
+
+        .dialogue-box {
+            width: 50%;
+            height: auto;
+            aspect-ratio: 1920 / 691;
+            background: url('dialogue-box.png') no-repeat center center;
+            background-size: 100% 100%;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            white-space: pre-line;
+        }
+        .choices {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin:1px;
+        }
+        .choices button {
+            width: 580px; 
+            height: 140px; 
+            margin: 10px;
+            background-size: contain; 
+            border: none;
+            cursor: pointer;
+            color: #333;
+            font-size: 1.2em;
+            font-family: 'GalmuriMono', sans-serif;
+        }
+        .choice1 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice2 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice3 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice4 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice5 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice6 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice7 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice8 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice9 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice10 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice11 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice12 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice13 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice14 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice15 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice17 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice20 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice21 {
+            background: url('choice1.png') no-repeat center center;
+        }
+        .choice22 {
+            background: url('choice1.png') no-repeat center center;
+        } 
+    </style>
+</head>
+<body>
+    <div id="logo"></div>
+    <div id="start-screen">
+        <div class="small-logo"></div>
+        <div class="video-container" style="display: none;"></div>
+        <button id="play-video-button" onclick="playVideo()"></button>
+        <button id="start-button" onclick="startGame()"></button>
+        </div>
+    </div>
+
+
+    <div id="scene1" class="scene">
+        <div class="dialogue-box" id="dialogue-box1"></div>
+        <div class="choices" id="choices1">
+            <button class="choice1" onclick="goToScene(2)">화장실부터 간다.</button>
+            <button class="choice2" onclick="goToScene(3)">주스 샤워를 하러 간다.</button>
+        </div>
+    </div>
+
+    <div id="scene2" class="scene">
+        <div class="dialogue-box" id="dialogue-box2"></div>
+        <div class="choices" id="choices2">
+            <button class="choice1" onclick="goToScene(5)">무슨 말씀하시는 거예요!!</button>
+            <button class="choice2" onclick="goToScene(4)">일단 늦을 것 같으니 그냥 가자!</button>
+        </div>
+    </div>
+
+    <div id="scene3" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box3"></div>
+        <div class="choices" id="choices3">
+            <button class="choice1" onclick="goToScene(4)">으악! 늦었다!!</button>
+        </div>
+    </div>
+
+    <div id="scene4" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box4"></div>
+        <div class="choices" id="choices4">
+            <button class="choice1" onclick="goToScene(6)">딸기를 찾으러 가자!!</button>
+        </div>
+    </div>
+
+    <div id="scene5" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box5"></div>
+        <div class="choices" id="choices5">
+            <button class="choice1" onclick="goToScene(4)">일단 늦었으니 얼른 가야겠어.</button>
+        </div>
+    </div>
+
+    <div id="scene6" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box6"></div>
+        <div class="choices" id="choices6">
+            <button class="choice1" onclick="goToScene(7)">모두에게 알릴 거야!!</button>
+        </div>
+    </div>
+
+    <div id="scene7" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box7"></div>
+        <div class="choices" id="choices7">
+            <button class="choice1" onclick="goToScene(8)">당도도 올라갔겠다, 선행하러 가볼까?</button>
+        </div>
+    </div>
+
+    <div id="scene8" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box8"></div>
+        <div class="choices" id="choices8">
+            <button class="choice1" onclick="goToScene(9)">오늘은 이쯤하고 돌아가자.</button>
+        </div>
+    </div>
+
+    <div id="scene9" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box9"></div>
+        <div class="choices" id="choices9">
+            <button class="choice1" onclick="goToScene(10)">그만 생각하고 자러 가자!</button>
+        </div>
+    </div>
+
+    <div id="scene10" class="scene">
+        <div class="dialogue-box" id="dialogue-box10"></div>
+        <div class="choices" id="choices10">
+            <button class="choice1" onclick="goToScene(11)">소리의 근원을 찾자!</button>
+            <button class="choice2" onclick="goToScene(12)">귀찮은데 그냥 자자</button>
+        </div>
+    </div>
+
+    <div id="scene11" class="scene">
+        <div class="dialogue-box" id="dialogue-box11"></div>
+        <div class="choices" id="choices11">
+            <button class="choice1" onclick="goToScene(20)">지금 뭐 하시는 거예요!!</button>
+            <button class="choice2" onclick="goToScene(13)">이..일단 방으로 돌아가자..</button>
+        </div>
+    </div>
+
+    <div id="scene12" class="scene">
+        <div class="dialogue-box" id="dialogue-box12"></div>
+        <div class="choices" id="choices12">
+            <button class="choice1" onclick="goToScene(11)">소리의 근원을 찾자!</button>
+            <button class="choice2" onclick="goToScene(12)">오늘은 조용하겠지 그냥 자자</button>
+        </div>
+    </div>
+
+    <div id="scene13" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box13"></div>
+        <div class="choices" id="choices13">
+            <button class="choice1" onclick="goToScene(14)">일단 화장실에서 본 다른 딸기를 찾자.</button>
+        </div>
+    </div>
+
+    <div id="scene14" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box14"></div>
+        <div class="choices" id="choices14">
+            <button class="choice1" onclick="goToScene(15)">도대체 뭐죠? 여긴 어딘가요? 당신들은 누구죠?</button>
+        </div>
+    </div>
+
+    <div id="scene15" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box15"></div>
+        <div class="choices" id="choices15">
+            <button class="choice1" onclick="goToScene(16)">너무 위험한 것 아니에요?! 당장 딸기씨를 구하러 가요!</button>
+            <button class="choice1" onclick="goToScene(17)">딸기씨를 구출할 계획부터 짭시다!</button>
+        </div>
+    </div>
+
+    <div id="scene16" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box16"></div>
+    </div>
+
+    <div id="scene17" class="scene"> 
+        <div class="choices" id="choices17">
+            <button class="choice1" onclick="goToScene(18)">됐어! 이제 계획을 실행하자!</button>
+        </div>
+    </div>
+
+    <div id="scene18" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box18"></div>
+    </div>
+
+    <div id="scene19" class="scene">
+        <div class="dialogue-box" id="dialogue-box19"></div> 
+    </div>
+
+    <div id="scene20" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box20"></div>
+    </div>
+
+    <div id="scene21" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box21"></div>
+        <button id="home-button" onclick="refreshPage()"></button>
+    </div>
+
+    <div id="scene22" class="scene"> 
+        <div class="dialogue-box" id="dialogue-box22"></div>
+        <button id="home-button" onclick="refreshPage()"></button>
+    </div>
+
+    <div id="scene23" class="scene"> 
+         <button id="home-button" onclick="refreshPage()"></button>
+    </div>
+
+    <script>
+
+    function playVideo() {
+        var smallLogoDiv = document.querySelector('.small-logo');
+        var youtubeVideo = '<iframe width="560" height="315" src="https://www.youtube.com/embed/A8ExTWrDS2s?si=Zn-EtxCn1jFcME83" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+        
+        smallLogoDiv.innerHTML = youtubeVideo;
+    }
+        document.addEventListener('DOMContentLoaded', () => {
+            const logo = document.getElementById('logo');
+            logo.style.display = 'flex';
+
+            setTimeout(() => {
+                logo.style.display = 'none';
+                document.getElementById('start-screen').style.display = 'flex';
+            }, 3000);
+        });
+
+        const dialogues = {
+            1: [
+                "흠.. 화장실이 가고 싶은데..",
+                "화장실에 갔다가 샤워하고 가면 늦으려나?",
+                "어떡하지?"
+            ],
+            2: [
+                "@#1@#$!@!@!!$",
+                "응? 누구지? 무슨 소리를 하는 거야?",
+                "무슨 말도 안 되는 소릴!"
+            ],
+            3: [
+                "헉 어떡하지..",
+                "얼른 닦고 가야 할 텐데.."
+            ],
+            4: [
+                "휴~ 안 늦었다!",
+                "근데 아까 그 딸기들은 누구지?",
+                "찾아내야겠어!!"
+            ],
+            5: [
+                "무슨 소리를 하시는 거예요!!",
+                "모두에게 알리겠어요!!",
+                "으악!!! 여기 비누가 왜 있어?!"
+            ],
+            6: [
+                "어, 찾았다!",
+                "아까 그 딸기가 분명해!",
+                "이리 따라오세요!!"
+            ],
+            7: [
+                "이 딸기가 우리 모두를 모욕했어요!",
+                "당장 내쫓아야 합니다!!",
+                "첫 번째 퀘스트 성공! BRIX UP!"
+            ],
+            8: [
+                { text: "안녕하세요~ 당도 높은 삶을 원하시나요~?", background: "url('dialogue-box.png')" },
+                { text: "저리 꺼져!!", background: "url('dialogue-orange.png')" },
+                { text: "아 짜증 나 왜 이렇게 붙잡아..", background: "url('dialogue-banane.png')" }
+            ],
+            9: [
+                "주스 샤워는 언제나 기분 좋아~",
+                "그나저나 세상 과일들은 왜 이렇게 예민한 거야",
+                "이게 다 당도가 낮아서 그래 쯔쯧.."
+            ],
+            10: [
+                "응? 이게 무슨 소리지? ",
+                "요새 부쩍 밤마다 시끄럽네..",
+                "잠도 잘 못 자겠고.. 한 번 살펴볼까?"
+            ],
+            11: [
+                "어.........?",
+                "그때 그 딸기잖아! 내쫓은 게 아니었어?",
+                "어..어떡하지? 상태가 안 좋은 것 같은데..",
+                "말려야 되나?"
+            ],
+            12: [
+                "오늘도 시끄러워서 잠을 못 잤어..",
+                "다크서클도 점점 내려와..",
+                "너무 피곤해.. 무슨 소리인지 찾아볼까?"
+            ],
+            13: [
+                "아까 그 바가지는 주스 샤워실에 있던 건데..",
+                "그럼 그때 그 딸기들이 하던 말이 사실인가?",
+                "어떡해야되지..."
+            ],
+            14: [
+                "저기.. 그때 그 딸기 맞으시죠?",
+                "제가 이상한 걸 목격했거든요..",
+                "오이브님이 딸기의 즙을 짜고 있었어요."
+            ],
+            15: [
+                { text: "사실 저희는 잠복 중인 경찰입니다.", background: "url('dialogue-fraise.png')" },
+                { text: "2년 전, 저희 형이 이곳으로 간 후,", background: "url('dialogue-fraise.png')" },
+                { text: "혼수상태로 돌아왔거든요.", background: "url('dialogue-fraise.png')" },
+                { text: "그래서 저희가 이곳을 파헤치는 중입니다.", background: "url('dialogue-fraise.png')" }
+            ],
+            16: [
+                "아무도 없는 지금이 기회에요!",
+                "빨리 딸기씨를 구합시다!!",
+                "헉! 들킨 건가..!!!"
+            ],
+            18: [
+                { text: "후후 정말 신선한 딸기야.", background: "url('dialogue-oeive.png')" },
+                { text: "당도 높은 잼을 만들 수 있겠어!!", background: "url('dialogue-oeive.png')" },
+                "꼼짝마!!! 너희들은 포위됐다!"
+            ],
+            19: [
+                { text: "무슨 생각으로 이런 짓을 벌이는거야!!", background: "url('dialogue-fraise.png')" },
+                { text: "당장 따라와! 너희들은 최소 20년형이야!", background: "url('dialogue-fraise.png')" },
+                { text: "......", background: "url('dialogue-oeive.png')" }
+            ],
+            20: [
+                "지..지금 뭐 하시는 거예요!!!",
+                "다 죽어가잖아요!!",
+                "으악!!!!!"
+            ],
+            21: [
+                "당도 높은 복숭아 잼.",
+                "유통기한 2026. 09. 29."
+            ],
+            22: [
+                "당도 높은 딸기 잼과 복숭아 잼.",
+                "유통기한 2026. 09. 29"
+            ]
+
+        };
+
+            function playVideo() {
+                const videoContainer = document.querySelector('.video-container');
+                const smallLogoDiv = document.querySelector('.small-logo');
+                const playButton = document.getElementById('play-video-button');
+                const startButton = document.getElementById('start-button');
+    
+    // YouTube 동영상 추가
+    videoContainer.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/mi29qJJ0tvw?si=5qGS4m3y4OX-Jws-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+    videoContainer.style.display = 'block';
+    videoContainer.style.marginTop = '-40px';
+    
+    // small-logo를 위로 이동
+    smallLogoDiv.style.marginTop = '-50px'; // 필요에 따라 조정
+    
+    // 버튼들을 아래로 이동
+    playButton.style.marginTop = '20px';
+    startButton.style.marginTop = '40px';
+}
+
+        function startGame() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('scene1').style.display = 'flex';
+            showDialogue(1);
+
+            const bgm = document.getElementById('bgm');
+            bgm.play().catch(error => {
+            console.log("Autoplay was prevented. User interaction is needed to play the audio.");
+                });
+        }
+
+
+    function showDialogue(sceneNumber) {
+    const dialogueBox = document.getElementById('dialogue-box' + sceneNumber);
+    const choices = document.getElementById('choices' + sceneNumber);
+    const sceneDialogues = dialogues[sceneNumber];
+    let dialogueIndex = 0;
+    let text = '';
+
+    const interval = setInterval(() => {
+        if (typeof sceneDialogues[dialogueIndex] === 'object') {
+            // sceneDialogues가 객체일 경우 (텍스트와 배경 이미지를 모두 변경)
+            if (text.length === 0) {
+                dialogueBox.style.backgroundImage = sceneDialogues[dialogueIndex].background;
+            }
+            text += sceneDialogues[dialogueIndex].text.charAt(text.length);
+        } else {
+            // 일반적인 경우, 텍스트만 변경
+            text += sceneDialogues[dialogueIndex].charAt(text.length);
+        }
+
+        dialogueBox.textContent = text;
+
+        if (typeof sceneDialogues[dialogueIndex] === 'object' 
+            ? text.length === sceneDialogues[dialogueIndex].text.length 
+            : text.length === sceneDialogues[dialogueIndex].length) {
+            dialogueIndex++;
+            text = '';
+            if (dialogueIndex >= sceneDialogues.length) {
+                clearInterval(interval);
+                if ([5, 6, 7, 15, 17].includes(sceneNumber)) {
+                    let timeout = 1000;
+                    if (sceneNumber === 15) timeout = 3000;
+                    if (sceneNumber === 17) timeout = 8000;
+
+                    setTimeout(() => {
+                        choices.style.display = 'flex';
+                    }, timeout);
+                } else {
+                    choices.style.display = 'flex';
+                }
+            }
+        }
+    }, 130);
+}
+
+
+
+        function refreshPage() {
+            location.reload();
+        }
+
+        function goToScene(sceneNumber) {
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.style.display = 'none';
+            });
+            document.getElementById('scene' + sceneNumber).style.display = 'flex'; 
+            showDialogue(sceneNumber);
+
+            if (sceneNumber === 3) {
+                setTimeout(() => {
+                    document.getElementById('scene3').style.backgroundImage = "url('scene3-1.png')";
+                }, 2000);  // 2초 후에 이미지 변경
+            }
+
+            if (sceneNumber === 5) {
+                setTimeout(() => {
+                    document.getElementById('scene5').style.backgroundImage = "url('scene5-1.png')";
+                }, 4050); 
+            }
+
+            if (sceneNumber === 6) {
+                setTimeout(() => {
+                    document.getElementById('scene6').style.backgroundImage = "url('scene6-1.png')";
+                }, 2800); 
+            }
+
+            if (sceneNumber === 7) {
+                setTimeout(() => {
+                    document.getElementById('scene7').style.backgroundImage = "url('scene7-1.png')";
+                }, 4200); 
+            }
+
+            if (sceneNumber === 15) {
+                setTimeout(() => {
+                    document.getElementById('scene15').style.backgroundImage = "url('scene15-1.png')";
+                }, 9000); 
+            }
+
+            if (sceneNumber === 16) {
+                setTimeout(() => {
+                document.getElementById('scene16').style.backgroundImage = "url('scene16-1.png')";
+                }, 4000); 
+
+                setTimeout(() => {
+                goToScene(22);
+                }, 8000); // 5초 뒤에 scene22로 넘어가기
+            }
+
+            if (sceneNumber === 17) {
+                setTimeout(() => {
+                document.getElementById('scene17').style.backgroundImage = "url('scene17-1.png')";
+                document.getElementById('choices17').style.display = 'flex'; // choice 버튼 표시
+                }, 5000); // 5초 후에 이미지 변경 및 choice 표시
+            }
+
+            if (sceneNumber === 18) {
+                setTimeout(() => {
+                document.getElementById('scene18').style.backgroundImage = "url('scene18-1.png')";
+                }, 4500); 
+
+                setTimeout(() => {
+                goToScene(19);
+                }, 10000); // 5초 뒤에 scene22로 넘어가기
+            }
+
+            if (sceneNumber === 19) {
+                setTimeout(() => {
+                goToScene(23);
+                }, 10000);
+            }
+
+            if (sceneNumber === 20) {
+                setTimeout(() => {
+                document.getElementById('scene20').style.backgroundImage = "url('scene20-1.png')";
+                }, 3800); 
+
+                setTimeout(() => {
+                goToScene(21);
+                }, 5000); // 5초 뒤에 scene21로 넘어가기
+            }
+        }
+    </script>
+</body>
+</html>
